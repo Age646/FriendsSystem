@@ -1,0 +1,89 @@
+<br>
+<div class="index" style="padding-left: 50px">
+
+    <table class="table table-hover table-striped" style="position: center">
+
+        <thead>
+        <tr><th>Name</th><th>Username</th><th>Image</th><th>Requests</th></tr>';
+
+        </thead>
+        <tbody>
+        <?php
+
+        foreach ($data as $friend) {
+
+            if($friend->getFriend1() == $user->userIDLogged() AND $friend->getStatus() == 4) {
+                echo '<tr>
+                    <td>' . $friend->getName() . '</td>
+                    <td>' . $friend->getUsername() . '</td>
+                    <td><img src="images/' . $friend->getPicture() . '" width="100" height="80"></td>
+                    ';
+
+                echo ' <form method="post" action="/requests.php"><td><button type="submit" name="deleteFriend2" class="btn btn-danger">Unfollow</button></td>
+                    <input type="hidden" name="currentUID" value="' .$user->userIDLogged().'">
+                    <input type="hidden" name="requestID" value="'.$friend->getUserID().'"></form>';
+            }
+        } ?>
+        </tbody>
+    </table>
+<!--    <br>-->
+<!--    <div class="mapdiv" id="mapdiv" style="height:500px;right: 50px"></div>-->
+
+</div>
+<br>
+
+<div class="map">
+    <div class="mapdiv" id="mapdiv" style="height:500px;right: 50px"></div>
+
+</div>
+<script src="/OpenLayers-2.13.1/OpenLayers.js"></script>
+
+<!--</body>-->
+
+
+<style>
+    .table-striped>tbody>tr:nth-child(odd)>td,
+    .table-striped>tbody>tr:nth-child(odd)>th {
+        background-color: #2a6496 ;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        margin-right: 16px;
+        background-color: #FFFFFF;
+        padding-left: 100px;
+        border-radius: 50px;
+        /*-moz-border-radius: 50px;*/
+
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        color: #FFFFFF;
+    }
+
+    tr:nth-child(even) {
+        background-color: #003a6b;
+    }
+    .index{
+        margin-left: 10px;
+        margin-right: 80px;
+    }
+    tr{
+        background-color: #2a6496;
+    }
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        background-color: #3c3c3c;
+    }
+    tr, th{
+        background-color: #3c3c3c;
+    }
+    .map{
+        margin-left: 100px;
+        margin-right: 100px;
+        border: 5px solid #555;
+    }
+</style>

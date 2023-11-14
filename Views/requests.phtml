@@ -1,0 +1,84 @@
+<br>
+<div class="index" style="padding-left: 50px">
+
+    <table class="table table-hover table-striped" style="position: center">
+
+        <thead>
+        <tr><th>Name</th><th>Username</th><th>Image</th><th>Requests</th></tr>';
+
+        </thead>
+        <tbody>
+        <?php
+        foreach ($data as $friendRequest) {
+
+            if ($friendRequest->getFriend1() == $user->userIDLogged() and $friendRequest->getStatus() == 2) {
+                echo '<tr>
+            <td>' . $friendRequest->getName() . '</td>
+            <td>' . $friendRequest->getUsername() . '</td>
+            <td><img src="images/' . $friendRequest->getPicture() . '" width="100" height="80"></td>
+                    ';
+
+                echo ' <form method="post" action="/requests.php"><td><button type="submit" name="cancelRequest" class="btn btn-danger">CANCEL</button></td>
+                <input type="hidden" name="currentUID" value="' . $user->userIDLogged() . '">
+                <input type="hidden" name="requestID" value="' . $friendRequest->getUserID() . '"></form>';
+            }
+
+            if($friendRequest->getFriend2() == $user->userIDLogged() AND $friendRequest->getStatus() == 2) {
+                echo '<tr>
+                    <td>' . $friendRequest->getName() . '</td>
+                    <td>' . $friendRequest->getUsername() . '</td>
+                    <td>' . $friendRequest->getEmail() . '</td>
+                    <td><img src="images/' . $friendRequest->getPicture() . '" width="100" height="80"></td>
+                    </tr>';
+
+                echo ' <form method="post" action="/requests.php"><td><button type="submit" name="acceptFriend" class="btn btn-success">ACCEPT</button></td>
+                     <td><button type="submit" name="declineFriend" class="btn btn-danger">REJECT</button></td> 
+                    <input type="hidden" name="friendRequest1" value="'.$friendRequest->getFriend1().'">
+                    <input type="hidden" name="friendRequest2" value="'.$user->userIDLogged().'"></form>';
+            }
+        }?>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .table-striped>tbody>tr:nth-child(odd)>td,
+    .table-striped>tbody>tr:nth-child(odd)>th {
+        background-color: #2a6496 ;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        margin-right: 16px;
+        background-color: #FFFFFF;
+        padding-left: 100px;
+        border-radius: 50px;
+        /*-moz-border-radius: 50px;*/
+
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        color: #FFFFFF;
+    }
+
+    tr:nth-child(even) {
+        background-color: #003a6b;
+    }
+    .index{
+        margin-left: 10px;
+        margin-right: 80px;
+    }
+    tr{
+        background-color: #2a6496;
+    }
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        background-color: #3c3c3c;
+    }
+    tr, th{
+        background-color: #3c3c3c;
+    }
+</style>

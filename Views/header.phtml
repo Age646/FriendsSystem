@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends created by Adil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+    <link rel="stylesheet" href="/css/my-style.css">
+</head>
+
+<body>
+<div>
+    <div class="header-dark">
+        <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+            <div class="container"><a class="navbar-brand" href="/index.php">FRIENDS</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse"
+                     id="navcol-1">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="/index.php">Home</a></li>
+                    <?php
+                    if($user->isLoggedIn() == true)
+                        echo'
+                        <li class="nav-item"> <a class="nav-link" href="/friends.php" data-abc="true">Friends</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="/requestsPage.php" data-abc="true">Requests</a></li>
+                    '; ?>
+                    </ul>
+                    <form class="form-inline mr-auto" target="_self" method="post">
+                        <div class="form-group"><label for="search-field"><i class="fa fa-search"></i></label><input class="form-control search-field" type="search" name="searchText" id="search-field" onkeyup="showHint(this.value)"></div>
+                    </form>
+            <?php
+
+            if (!isset($_SESSION["login"])) {
+               echo '
+                 <a class="nav-link active" aria-current="page">'.$user->usernameLogged().' logged in </a>
+                    <form method="post">
+                    <span class="navbar-text"><a href="/loginController.php" class="login">Log In</a></span><a class="btn btn-light action-button" role="button" href="/signupController.php">Sign Up</a></div>
+                    </form>
+                 ';  }else {
+                echo '
+                  <a class="nav-link active" aria-current="page"> Hello ' . $user->usernameLogged() . ' </a>';
+
+                echo '<form method="post"  class="d-flex">
+                
+                    <input type="submit" class="btn btn-outline-danger me-2" name="logoutBtn" value="Sign out">
+                </form>';
+}
+            ?>
+            </div>
+        </nav>
+        <div id="search_result" style="color: #FFFFFF">
+            <ul class="list-group" id="txtHint"></ul>
+        </div>
+
+        <div style="overflow: auto">
+            <ul class="list-group" id="txtHint">
+
+            </ul>
+        </div>
+        <script src="/js/liveSearch.js"></script>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+

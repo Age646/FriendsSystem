@@ -1,0 +1,116 @@
+<br>
+<div class="index" style="padding-left: 50px">
+
+    <table class="table table-hover table-striped" style="position: center">
+
+        <thead>
+        <?php
+        if(isset($_SESSION['login']))
+            echo '<tr><th>Name</th><th>Username</th><th>Image</th><th>Requests</th></tr>';
+        ?>
+
+        <?php
+        if (!isset($_SESSION['login']))
+            echo  '
+            <tr>
+                <th>Name</th><th>Image</th>
+            </tr>
+            ';?>
+        </thead>
+        <tbody>
+        <?php
+        if (isset($_SESSION['login'])) {
+
+            foreach ($data as $dataSet) {
+                echo '
+               <tr>
+                    <td>' . $dataSet->getName() . '</td> 
+                    <td>' . $dataSet->getUsername() . '</td>
+                    <td><img src="images/' . $dataSet->getPicture() . '" width="100" height="80"></td>
+               ';
+
+                $loggedIn = $userDataSet->alreadyFriends($user->userIDLogged(), $dataSet->getUserID());
+                if ($loggedIn == 4)
+                {
+                    echo '
+                    <form method="post" action="/requests.php">
+                    <td><button type="submit" name="deleteFriend" class="btn btn-danger">Unfollow</button></td>
+                    <input type="hidden" name="currentUID" value="' .$user->userIDLogged().'">
+                    <input type="hidden" name="requestID" value="'.$dataSet->getUserID().'">';
+                    if (isset($_GET['page']))
+                        echo'<input type="hidden" name="currentPage" value="'.$_GET['page'].'"></form>';
+                }
+
+                elseif ($loggedIn == 2)
+                {
+                    echo '
+                     <form class="d-flex" method="post" action="/requests.php">
+                     <td><button type="submit" name="cancelRequest2" class="btn btn-danger">CANCEL</button></td>
+                    <input type="hidden" name="currentUID" value="' .$user->userIDLogged().'">
+                    <input type="hidden" name="requestID" value="'.$dataSet->getUserID().'"></form>';
+                }
+                else{
+                    echo '
+                     
+                     <form method="post" action="/requests.php">
+                     <td><button type="submit" name="addFriend" class="btn btn-success">Follow</button></td>
+                    <input type="hidden" name="currentUID" value="' .$user->userIDLogged().'"/>
+                    <input type="hidden" name="requestID" value="'.$dataSet->getUserID().'"/></form>';
+                }
+            }
+        }
+        if (!isset($_SESSION['login'])) {
+
+            foreach ($data as $dataSet) {
+                echo '
+               <tr>
+                    <td>' . $dataSet->getName() . '</td> 
+                    <td><img src="images/' . $dataSet->getPicture() . '" width="80" height="80"></td>
+               ';
+            }}
+
+        ?>
+        </tbody>
+    </table>
+</div>
+<style>
+    .table-striped>tbody>tr:nth-child(odd)>td,
+    .table-striped>tbody>tr:nth-child(odd)>th {
+        background-color: #2a6496 ;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        margin-right: 16px;
+        background-color: #FFFFFF;
+        padding-left: 100px;
+        border-radius: 50px;
+        /*-moz-border-radius: 50px;*/
+
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        color: #FFFFFF;
+    }
+
+    tr:nth-child(even) {
+        background-color: #003a6b;
+    }
+    .index{
+        margin-left: 10px;
+        margin-right: 80px;
+    }
+    tr{
+        background-color: #2a6496;
+    }
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        background-color: #3c3c3c;
+    }
+    tr, th{
+        background-color: #3c3c3c;
+    }
+</style>
